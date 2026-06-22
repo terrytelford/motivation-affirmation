@@ -27,7 +27,7 @@ FONTS_LINK = (
 )
 
 
-def head(title, description, root, body_class=""):
+def head(title, description, root="", body_class=""):
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -35,33 +35,33 @@ def head(title, description, root, body_class=""):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title} — Motivation Affirmation</title>
 <meta name="description" content="{description}">
-<link rel="icon" type="image/svg+xml" href="{root}images/favicon.svg">
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
 <meta property="og:title" content="{title} — Motivation Affirmation">
 <meta property="og:description" content="{description}">
 <meta property="og:type" content="website">
 {FONTS_LINK}
-<link rel="stylesheet" href="{root}css/style.css">
+<link rel="stylesheet" href="/css/style.css">
 </head>
-<body data-root="{root}"{(' class="' + body_class + '"') if body_class else ''}>
+<body data-root="/"{(' class="' + body_class + '"') if body_class else ''}>
 '''
 
 
-def nav(root, current):
+def nav(root="", current=""):
     items = [
-        ("home", "index.html", "Today\u2019s Card"),
-        ("categories", "categories/index.html", "Categories"),
-        ("tools", "tools/index.html", "Tools"),
-        ("blog", "blog/index.html", "Blog"),
-        ("shop", "shop.html", "Shop"),
-        ("about", "about.html", "About"),
+        ("home", "/index.html", "Today\u2019s Card"),
+        ("categories", "/categories/index.html", "Categories"),
+        ("tools", "/tools/index.html", "Tools"),
+        ("blog", "/blog/index.html", "Blog"),
+        ("shop", "/shop.html", "Shop"),
+        ("about", "/about.html", "About"),
     ]
     links = "".join(
-        f'<a href="{root}{path}"{" class=\"current\"" if key == current else ""}>{label}</a>'
+        f'<a href="{path}"{" class=\"current\"" if key == current else ""}>{label}</a>'
         for key, path, label in items
     )
     return f'''<nav class="site-nav">
   <div class="wrap">
-    <a href="{root}index.html" class="logo"><img src="{root}images/logo.png" alt="Motivation Affirmation" class="logo-img"></a>
+    <a href="/index.html" class="logo"><img src="/images/logo.png" alt="Motivation Affirmation" class="logo-img"></a>
     <button class="nav-toggle" aria-label="Toggle navigation">MENU</button>
     <div class="nav-links">{links}</div>
   </div>
@@ -69,12 +69,12 @@ def nav(root, current):
 '''
 
 
-def footer(root):
+def footer(root=""):
     return f'''<footer>
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <a href="{root}index.html" class="logo"><img src="{root}images/logo.png" alt="Motivation Affirmation" class="logo-img"></a>
+        <a href="/index.html" class="logo"><img src="/images/logo.png" alt="Motivation Affirmation" class="logo-img"></a>
         <p style="margin-top:14px;color:var(--canvas-text-faint);max-width:280px;">
           Daily affirmations for women ready to rise. Pull one when you need it, or write your own.
         </p>
@@ -82,27 +82,27 @@ def footer(root):
       <div>
         <h4>Explore</h4>
         <ul>
-          <li><a href="{root}categories/success.html">Success</a></li>
-          <li><a href="{root}categories/health.html">Health</a></li>
-          <li><a href="{root}categories/wealth.html">Wealth</a></li>
-          <li><a href="{root}categories/index.html">All categories</a></li>
+          <li><a href="/categories/success.html">Success</a></li>
+          <li><a href="/categories/health.html">Health</a></li>
+          <li><a href="/categories/wealth.html">Wealth</a></li>
+          <li><a href="/categories/index.html">All categories</a></li>
         </ul>
       </div>
       <div>
         <h4>Motivation Affirmation</h4>
         <ul>
-          <li><a href="{root}tools/index.html">Tools</a></li>
-          <li><a href="{root}blog/index.html">Blog</a></li>
-          <li><a href="{root}shop.html">Shop</a></li>
-          <li><a href="{root}about.html">About</a></li>
+          <li><a href="/tools/index.html">Tools</a></li>
+          <li><a href="/blog/index.html">Blog</a></li>
+          <li><a href="/shop.html">Shop</a></li>
+          <li><a href="/about.html">About</a></li>
         </ul>
       </div>
       <div>
         <h4>Legal</h4>
         <ul>
-          <li><a href="{root}privacy.html">Privacy</a></li>
-          <li><a href="{root}terms.html">Terms</a></li>
-          <li><a href="{root}disclosure.html">Affiliate disclosure</a></li>
+          <li><a href="/privacy.html">Privacy</a></li>
+          <li><a href="/terms.html">Terms</a></li>
+          <li><a href="/disclosure.html">Affiliate disclosure</a></li>
         </ul>
       </div>
     </div>
@@ -112,7 +112,7 @@ def footer(root):
     </div>
   </div>
 </footer>
-<script src="{root}js/main.js"></script>
+<script src="/js/main.js"></script>
 </body>
 </html>
 '''
@@ -145,13 +145,13 @@ def affirmation_card(a, with_actions=True, root=""):
     cat_slug = a["category"]
     img_header = (
         f'<div class="card-image-header">'
-        f'<img src="{root}images/categories/{cat_slug}.jpg" alt="" loading="lazy" '
+        f'<img src="/images/categories/{cat_slug}.jpg" alt="" loading="lazy" '
         f'onerror="this.parentElement.style.display=\'none\'">'
         f'</div>'
-    ) if root else ""
+    )
     logo_mark = (
-        f'<img src="{root}images/logo.png" alt="" class="card-logo" loading="lazy">'
-    ) if root else ""
+        f'<img src="/images/logo.png" alt="" class="card-logo" loading="lazy">'
+    )
     return f'''<div class="card card--img" data-card-id="{a['id']}">
   {img_header}
   <div class="card-meta"><span>CARD NO. {pad(a['id'])}</span><span>FILED: {cat['tab']}</span></div>
@@ -323,13 +323,13 @@ def build_categories_index():
   </div>
 </section>
 '''
-    write("categories/index.html", page("All Categories", "Browse all eight affirmation categories: success, health, wealth, happiness, confidence, relationships, sleep, and gratitude.", "../", "categories", body))
+    write("categories/index.html", page("All Categories", "Browse all eight affirmation categories: success, health, wealth, happiness, confidence, relationships, sleep, and gratitude.", "/", "categories", body))
 
 
 def build_category_pages():
     for slug, cat in CATS.items():
         items = [a for a in AFFS if a["category"] == slug]
-        cards = "".join(affirmation_card(a, root="../") for a in items)
+        cards = "".join(affirmation_card(a, root="/") for a in items)
         book_title, book_author, book_link = READING[slug]
         blog_slug, blog_title = BLOG_LINK_FOR_CATEGORY[slug]
         body = f'''
@@ -350,17 +350,17 @@ def build_category_pages():
       <p class="eyebrow moss">KEEP READING</p>
       <h3 style="margin-bottom:10px;">{blog_title}</h3>
       <p style="margin-bottom:18px;">More on how to actually use these \u2014 not just read them.</p>
-      <a href="../blog/{blog_slug}.html" class="btn btn-outline">Read the post</a>
+      <a href="/blog/{blog_slug}.html" class="btn btn-outline">Read the post</a>
     </div>
 
     <p class="affiliate-note">
       If you want to go deeper on {cat['label'].lower()}, we recommend <a href="{book_link}" target="_blank" rel="nofollow sponsored noopener">{book_title} by {book_author}</a>.
-      That\u2019s an affiliate link \u2014 if you buy through it, Motivation Affirmation earns a small commission at no extra cost to you. See our <a href="../disclosure.html">affiliate disclosure</a>.
+      That\u2019s an affiliate link \u2014 if you buy through it, Motivation Affirmation earns a small commission at no extra cost to you. See our <a href="/disclosure.html">affiliate disclosure</a>.
     </p>
   </div>
 </section>
 '''
-        write(f"categories/{slug}.html", page(cat["label"], f"{len(items)} {cat['label'].lower()} affirmations you can read, save, or copy. {cat['dek']}", "../", "categories", body))
+        write(f"categories/{slug}.html", page(cat["label"], f"{len(items)} {cat['label'].lower()} affirmations you can read, save, or copy. {cat['dek']}", "/", "categories", body))
 
 
 # ---------------------------------------------------------------------------
@@ -383,7 +383,7 @@ BLOG_POSTS = [
 <p>This is also the case for writing your own affirmations rather than only picking from a list. A template can\u2019t know that your version of patience shows up specifically at 7pm with a toddler who needs one more book, or that your version of discipline is answering the hard email after four drafts instead of zero. When you write the specific version, you\u2019re forced to locate a real moment as proof \u2014 and that proof is what makes the statement land differently than a generic one ever could.</p>
 <p>That doesn\u2019t mean pre-written affirmations are useless \u2014 they\u2019re a fast way to cover ground on a day you don\u2019t have the energy to write anything, and a good starting point for noticing which categories you actually need. But the version that does the most work is usually the one you wrote yourself, about something that actually happened.</p>
 <h2>How to use both</h2>
-<p>A practical split: use the <a href="../tools/generator.html">generator</a> on busy mornings when you need something fast and broadly relevant. Use the <a href="../tools/journal.html">journal</a> tool on the days something specific is on your mind \u2014 a hard conversation coming up, a goal you\u2019re wavering on \u2014 and write the one sentence that\u2019s actually true about how you\u2019ve handled this kind of thing before.</p>
+<p>A practical split: use the <a href="/tools/generator.html">generator</a> on busy mornings when you need something fast and broadly relevant. Use the <a href="/tools/journal.html">journal</a> tool on the days something specific is on your mind \u2014 a hard conversation coming up, a goal you\u2019re wavering on \u2014 and write the one sentence that\u2019s actually true about how you\u2019ve handled this kind of thing before.</p>
 '''
     },
     {
@@ -394,7 +394,7 @@ BLOG_POSTS = [
         "body": '''
 <p>Most affirmation routines fail for a boring reason: they\u2019re designed for the version of you that has a calm, unhurried morning, and most mornings aren\u2019t that. A 15-minute journaling-plus-affirmations-plus-visualization routine sounds great on a Sunday and gets skipped by Wednesday. The fix isn\u2019t more willpower. It\u2019s a smaller ritual that survives contact with an actual weekday.</p>
 <h2>The whole thing, in four steps</h2>
-<p><strong>1. Pull one card (10 seconds).</strong> Before you check your phone \u2014 not after \u2014 open the <a href="../tools/generator.html">generator</a> or grab today\u2019s card on the homepage. Don\u2019t overthink the category. Whatever shows up, shows up.</p>
+<p><strong>1. Pull one card (10 seconds).</strong> Before you check your phone \u2014 not after \u2014 open the <a href="/tools/generator.html">generator</a> or grab today\u2019s card on the homepage. Don\u2019t overthink the category. Whatever shows up, shows up.</p>
 <p><strong>2. Say it out loud, once, slowly (20 seconds).</strong> Not in your head. Out loud, even quietly. Hearing your own voice say it engages a different part of attention than silently reading does.</p>
 <p><strong>3. Name where it applies today (30 seconds).</strong> This is the step people skip, and it\u2019s the one that matters most. If the card says something about confidence, name the actual meeting or conversation today where that\u2019s relevant. This turns an abstract sentence into a specific intention.</p>
 <p><strong>4. One breath, then go.</strong> That\u2019s it. The ritual ends here on purpose \u2014 it should feel almost too short, not impressively long.</p>
@@ -420,7 +420,7 @@ BLOG_POSTS = [
 <p><em>Situation:</em> Sending a pitch email I\u2019d rewritten four times. <em>Strength:</em> I sent it anyway instead of waiting for a fifth draft. <em>Statement:</em> \u201cI finish and send, even when it isn\u2019t perfect yet.\u201d</p>
 <p><em>Situation:</em> A friend canceled plans last-minute, again. <em>Strength:</em> I said how I felt instead of pretending it was fine. <em>Statement:</em> \u201cI can say something hurt without making it a bigger fight than it needs to be.\u201d</p>
 <h2>Where to put it</h2>
-<p>Once you\u2019ve got a statement you\u2019d actually stand behind, file it in the <a href="../tools/journal.html">journal tool</a> \u2014 it walks you through these same three prompts and keeps everything you write filed in your browser, with nothing sent anywhere. Write one a week, not one a day. The framework works because each one is specific; specific takes a little longer, and that\u2019s fine.</p>
+<p>Once you\u2019ve got a statement you\u2019d actually stand behind, file it in the <a href="/tools/journal.html">journal tool</a> \u2014 it walks you through these same three prompts and keeps everything you write filed in your browser, with nothing sent anywhere. Write one a week, not one a day. The framework works because each one is specific; specific takes a little longer, and that\u2019s fine.</p>
 '''
     },
     {
@@ -438,7 +438,7 @@ BLOG_POSTS = [
 <blockquote>The affirmation doesn\u2019t work better at 7am. You\u2019re less likely to argue with it at 7am.</blockquote>
 <h2>How to use the window</h2>
 <p>The key is catching it before your phone catches you. Every notification you check after waking pulls your brain into beta-wave alertness \u2014 the critical, responsive, problem-solving state \u2014 before the alpha window has had time to do anything useful. Checking social media before your affirmation practice is essentially skipping the practice.</p>
-<p>A practical sequence: phone face-down until after you\u2019ve done your card pull. Even two minutes before you look at anything is better than zero. Pull a card from the <a href="../tools/generator.html">generator</a>, say it once out loud slowly, and then go ahead and check your phone. The whole thing takes ninety seconds and costs nothing.</p>
+<p>A practical sequence: phone face-down until after you\u2019ve done your card pull. Even two minutes before you look at anything is better than zero. Pull a card from the <a href="/tools/generator.html">generator</a>, say it once out loud slowly, and then go ahead and check your phone. The whole thing takes ninety seconds and costs nothing.</p>
 <h2>What about evening?</h2>
 <p>The other useful window is just before sleep, when your brain is moving in the opposite direction \u2014 back into theta waves as you drift off. The statements you say to yourself in the last ten minutes before sleep have an outsized influence on how your brain consolidates the day\u2019s experience. Gratitude affirmations work especially well here: they give your brain something to file as significant rather than leaving the unconscious to categorize the day on its own.</p>
 '''
@@ -460,7 +460,7 @@ BLOG_POSTS = [
 <p><strong>Capacity-based:</strong> \u201cI am capable of learning to earn more, save more, and manage money well.\u201d Nobody can argue this is false. It\u2019s the same sentence that\u2019s true for almost anyone with a functioning brain and internet access.</p>
 <h2>What to do with the big dreams</h2>
 <p>The big aspirational statements (\u201cI am a millionaire\u201d) aren\u2019t useless \u2014 they\u2019re just better used as visualization fuel than as morning affirmations. In a journaling context, where you\u2019re deliberately building a mental picture of a future state, they have a place. As a statement you say to yourself every morning while your bank account disagrees, they don\u2019t.</p>
-<p>Start with the affirmations in the <a href="../categories/wealth.html">Wealth drawer</a> \u2014 they\u2019re written to be true at multiple income levels and stages of the financial journey.</p>
+<p>Start with the affirmations in the <a href="/categories/wealth.html">Wealth drawer</a> \u2014 they\u2019re written to be true at multiple income levels and stages of the financial journey.</p>
 '''
     },
     {
@@ -482,7 +482,7 @@ BLOG_POSTS = [
 <p>These work because they give the nervous system accurate information rather than contradictory information. The nervous system responds to evidence. Give it evidence.</p>
 <h2>The breath connection</h2>
 <p>The most effective anxiety affirmation practice pairs the statement with a physiological intervention. Say your grounding affirmation on the exhale of a slow, extended breath (five counts in, seven counts out). The extended exhale activates the parasympathetic nervous system directly \u2014 and the affirmation anchors to that physical shift rather than fighting the anxiety independently.</p>
-<p>The <a href="../categories/sleep.html">Sleep and Calm</a> drawer has affirmations written specifically for high-anxiety moments \u2014 notice they\u2019re all written as acknowledgments rather than contradictions.</p>
+<p>The <a href="/categories/sleep.html">Sleep and Calm</a> drawer has affirmations written specifically for high-anxiety moments \u2014 notice they\u2019re all written as acknowledgments rather than contradictions.</p>
 '''
     },
     {
@@ -503,7 +503,7 @@ BLOG_POSTS = [
 <blockquote>The version of this practice that works is the one quiet enough to do anywhere.</blockquote>
 <h2>Adding specific intention</h2>
 <p>After you say the affirmation out loud, add one specific sentence: where does this apply today? \u201cI handle difficult conversations calmly\u201d becomes \u201cI handle difficult conversations calmly \u2014 specifically the one I have with my manager at 2pm today.\u201d The specificity takes ten seconds and the anchoring effect is significantly stronger.</p>
-<p>The <a href="../tools/generator.html">generator tool</a> is built for exactly this two-step practice: pull a card, say it out loud, name where it applies.</p>
+<p>The <a href="/tools/generator.html">generator tool</a> is built for exactly this two-step practice: pull a card, say it out loud, name where it applies.</p>
 '''
     },
     {
@@ -522,7 +522,7 @@ BLOG_POSTS = [
 <h2>The gap between feeling and doing</h2>
 <p>The confidence loop also explains why \u201cact confident even when you don\u2019t feel it\u201d is better advice than it sounds. When you act in spite of nervousness, you generate evidence that nervousness doesn\u2019t stop you \u2014 which is the most useful kind of evidence. An affirmation before the action is a way of mentally rehearsing the doing, not waiting for the feeling.</p>
 <p>Read the affirmation, say it out loud, walk in. The confidence catches up after, not before.</p>
-<p>Browse the <a href="../categories/confidence.html">Confidence drawer</a> \u2014 those affirmations are written specifically for the moment before you need them, not the moment after.</p>
+<p>Browse the <a href="/categories/confidence.html">Confidence drawer</a> \u2014 those affirmations are written specifically for the moment before you need them, not the moment after.</p>
 '''
     },
     {
@@ -540,7 +540,7 @@ BLOG_POSTS = [
 <h2>The practice</h2>
 <p>Read slowly. Out loud if you can do so without disturbing anyone \u2014 even a whisper counts. One affirmation is enough. Repeat it a few times on the exhale. Don\u2019t try to believe it completely. Just give your attention something to rest on other than the day\u2019s unfinished list.</p>
 <blockquote>You\u2019re not trying to solve anything. You\u2019re giving the mind an off-ramp.</blockquote>
-<p>The statements in the <a href="../categories/sleep.html">Sleep and Calm drawer</a> are written specifically for this \u2014 short, non-aspirational, present-tense, focused on release rather than achievement. Read them slowly, not quickly.</p>
+<p>The statements in the <a href="/categories/sleep.html">Sleep and Calm drawer</a> are written specifically for this \u2014 short, non-aspirational, present-tense, focused on release rather than achievement. Read them slowly, not quickly.</p>
 '''
     },
     {
@@ -558,7 +558,7 @@ BLOG_POSTS = [
 <p>The gratitude framing is often easier to land in because it has a built-in humility: \u201cI notice this,\u201d rather than \u201cI claim this.\u201d For people who find affirmations feel fake or forced, reframing them through gratitude often removes the resistance. \u201cI am confident\u201d can feel like a lie. \u201cI am grateful for the times I\u2019ve walked into hard rooms and come out okay\u201d is almost impossible to argue with.</p>
 <h2>A combined practice</h2>
 <p>One of the most effective short practices: at the end of each day, write one gratitude that also functions as an affirmation. \u201cI\u2019m grateful I sent the email I\u2019d been avoiding \u2014 I do hard things even when I don\u2019t feel like it.\u201d You\u2019re combining the attention-training of gratitude with the identity reinforcement of an affirmation, anchored to real, recent evidence.</p>
-<p>Browse both the <a href="../categories/gratitude.html">Gratitude drawer</a> and the <a href="../tools/journal.html">journal tool</a> \u2014 they\u2019re designed to work together.</p>
+<p>Browse both the <a href="/categories/gratitude.html">Gratitude drawer</a> and the <a href="/tools/journal.html">journal tool</a> \u2014 they\u2019re designed to work together.</p>
 '''
     },
     {
@@ -597,7 +597,7 @@ BLOG_POSTS = [
 <p>The guilt usually peaks after, not during. After the conversation, when you\u2019re replaying it and second-guessing, the useful affirmation shifts: \u201cI communicated what I needed, clearly and without cruelty. That\u2019s what I\u2019m supposed to do.\u201d The emphasis is on how you did it, not whether you did it.</p>
 <h2>For when the other person pushes back</h2>
 <p>\u201cTheir discomfort with my limit is not evidence that the limit is wrong.\u201d This is one of the most important sentences for people who struggle with boundaries \u2014 it reframes the other person\u2019s reaction as information about them rather than feedback on your decision.</p>
-<p>Browse the <a href="../categories/relationships.html">Relationships drawer</a> \u2014 those affirmations are written for the full arc of relational life, including the hard parts.</p>
+<p>Browse the <a href="/categories/relationships.html">Relationships drawer</a> \u2014 those affirmations are written for the full arc of relational life, including the hard parts.</p>
 '''
     },
     {
@@ -618,7 +618,7 @@ BLOG_POSTS = [
 <blockquote>Missing a day doesn\u2019t undo the ones before it. It\u2019s just a gap, not a reset.</blockquote>
 <h2>The re-entry practice</h2>
 <p>When you miss a few days and notice it, the re-entry shouldn\u2019t be dramatic. Don\u2019t restart with a long aspirational session to compensate. Just do the minimum version. One card. One read. The practice restarts from where it paused, not from zero.</p>
-<p>The <a href="../tools/generator.html">generator</a> is built for exactly this \u2014 fast, frictionless, no account. It should take under sixty seconds to pull a card and say it once.</p>
+<p>The <a href="/tools/generator.html">generator</a> is built for exactly this \u2014 fast, frictionless, no account. It should take under sixty seconds to pull a card and say it once.</p>
 '''
     },
     {
@@ -655,7 +655,7 @@ BLOG_POSTS = [
 <p>A specific affirmation points at evidence. \u201cI have walked into difficult conversations before and said what I needed to say\u201d isn\u2019t a claim \u2014 it\u2019s a recall prompt. Your brain starts looking for instances where this was true. When it finds them, the belief is reinforced by evidence rather than just asserted.</p>
 <p>\u201cI am enough\u201d doesn\u2019t give your brain anywhere to look. \u201cI am enough for the work in front of me today, even if I don\u2019t feel ready\u201d gives it a specific claim to evaluate \u2014 and in many cases, that specific claim is true in a way the abstract version isn\u2019t.</p>
 <h2>The practical split</h2>
-<p>Use the affirmations in the <a href="../categories/index.html">category drawers</a> as fast, broadly applicable options for ordinary days. Use the <a href="../tools/journal.html">journal tool</a> on the days something specific is weighing on you \u2014 when the generic option feels hollow, the specific one you write yourself will do more work.</p>
+<p>Use the affirmations in the <a href="/categories/index.html">category drawers</a> as fast, broadly applicable options for ordinary days. Use the <a href="/tools/journal.html">journal tool</a> on the days something specific is weighing on you \u2014 when the generic option feels hollow, the specific one you write yourself will do more work.</p>
 <h2>The most specific affirmation you can write</h2>
 <p>The most powerful format: \u201cThe last time I faced [specific situation], I [specific action]. That\u2019s who I am.\u201d It\u2019s backwards-looking, evidence-based, and almost impossible to argue with \u2014 because you\u2019re not predicting anything. You\u2019re describing something that already happened.</p>
 '''
@@ -675,7 +675,7 @@ BLOG_POSTS = [
 <h2>What doesn\u2019t change</h2>
 <p>Your circumstances don\u2019t rearrange themselves. The difficult people in your life don\u2019t become easier. The practice isn\u2019t changing the external world \u2014 it\u2019s changing how you navigate it, which is both more modest and more useful than the manifesting version implies.</p>
 <h2>The entry point</h2>
-<p>If you\u2019re still skeptical but curious, start with the smallest possible version: one affirmation from the <a href="../tools/generator.html">generator</a>, said out loud once, in the morning before you check your phone. Give it three weeks. You\u2019re not committing to believing it. You\u2019re running an experiment. Notice what changes, if anything, in your internal experience of hard days.</p>
+<p>If you\u2019re still skeptical but curious, start with the smallest possible version: one affirmation from the <a href="/tools/generator.html">generator</a>, said out loud once, in the morning before you check your phone. Give it three weeks. You\u2019re not committing to believing it. You\u2019re running an experiment. Notice what changes, if anything, in your internal experience of hard days.</p>
 '''
     },
     {
@@ -695,7 +695,7 @@ BLOG_POSTS = [
 <p><strong>\u201cI have something useful to contribute here, and I\u2019m going to contribute it.\u201d</strong> This shifts focus from self-evaluation (how am I coming across?) to task-orientation (what am I here to do?). Task-orientation reliably reduces performance anxiety.</p>
 <h2>The post-meeting practice</h2>
 <p>After the meeting, before you debrief with anyone else, name one specific thing you did well. Not everything. One thing. This is the evidence-building that makes the next pre-meeting affirmation land more truthfully.</p>
-<p>Browse the <a href="../categories/confidence.html">Confidence drawer</a> and the <a href="../categories/success.html">Success drawer</a> for affirmations written for professional moments.</p>
+<p>Browse the <a href="/categories/confidence.html">Confidence drawer</a> and the <a href="/categories/success.html">Success drawer</a> for affirmations written for professional moments.</p>
 '''
     },
 ]
@@ -722,23 +722,23 @@ def build_blog():
   </div>
 </section>
 '''
-    write("blog/index.html", page("Blog", "Practical writing on affirmations, morning rituals, and how to write affirmations that actually work.", "../", "blog", body))
+    write("blog/index.html", page("Blog", "Practical writing on affirmations, morning rituals, and how to write affirmations that actually work.", "/", "blog", body))
 
     for i, p in enumerate(BLOG_POSTS):
         body = f'''
 <section>
   <div class="wrap">
     <article class="post-body">
-      <img src="../images/blog/{p['slug']}.jpg" alt="{p['title']}" class="blog-hero-img" loading="lazy" onerror="this.style.display=\'none\'">
+      <img src="/images/blog/{p['slug']}.jpg" alt="{p['title']}" class="blog-hero-img" loading="lazy" onerror="this.style.display=\'none\'">
       <h1>{p['title']}</h1>
       <p class="post-meta">{p['date']} \u00b7 MOTIVATION AFFIRMATION</p>
       {p['body']}
-      <div class="post-footer-logo"><img src="../images/logo.png" alt="Motivation Affirmation" loading="lazy"></div>
+      <div class="post-footer-logo"><img src="/images/logo.png" alt="Motivation Affirmation" loading="lazy"></div>
     </article>
   </div>
 </section>
 '''
-        write(f"blog/{p['slug']}.html", page(p["title"], p["excerpt"], "../", "blog", body))
+        write(f"blog/{p['slug']}.html", page(p["title"], p["excerpt"], "/", "blog", body))
 
 
 def build_tools_index():
@@ -769,7 +769,7 @@ def build_tools_index():
   </div>
 </section>
 '''
-    write("tools/index.html", page("Tools", "Free affirmation generator and self-write journal tool. No account needed.", "../", "tools", body))
+    write("tools/index.html", page("Tools", "Free affirmation generator and self-write journal tool. No account needed.", "/", "tools", body))
 
 
 def build_generator_page():
@@ -806,7 +806,7 @@ def build_generator_page():
   </div>
 </section>
 '''
-    write("tools/generator.html", page("Affirmation Generator", "Free daily affirmation generator. Filter by category, generate a card, save your favorites \u2014 no account needed.", "../", "tools", body))
+    write("tools/generator.html", page("Affirmation Generator", "Free daily affirmation generator. Filter by category, generate a card, save your favorites \u2014 no account needed.", "/", "tools", body))
 
 
 def build_journal_page():
@@ -815,7 +815,7 @@ def build_journal_page():
   <div class="wrap">
     <p class="eyebrow moss">TOOL \u2014 JOURNAL</p>
     <h1>Write the one that\u2019s actually true.</h1>
-    <p class="lede">Self-written affirmations tend to outperform generic ones because they're specific to your actual life. This walks you through a simple three-part framework \u2014 read the <a href="../blog/write-your-own-affirmations.html">full breakdown</a> if you want the reasoning behind it.</p>
+    <p class="lede">Self-written affirmations tend to outperform generic ones because they're specific to your actual life. This walks you through a simple three-part framework \u2014 read the <a href="/blog/write-your-own-affirmations.html">full breakdown</a> if you want the reasoning behind it.</p>
   </div>
 </header>
 <section>
@@ -840,7 +840,7 @@ def build_journal_page():
   </div>
 </section>
 '''
-    write("tools/journal.html", page("Write Your Own Affirmations", "A simple situation, strength, statement framework for writing affirmations that actually hold up \u2014 saved privately in your browser.", "../", "tools", body))
+    write("tools/journal.html", page("Write Your Own Affirmations", "A simple situation, strength, statement framework for writing affirmations that actually hold up \u2014 saved privately in your browser.", "/", "tools", body))
 
 
 def build_shop():
