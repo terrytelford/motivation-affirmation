@@ -792,8 +792,7 @@ def build_tools_index():
 
 
 def build_generator_page():
-    cat_options = "".join(f'<option value="{c["slug"]}">{c["label"]}</option>' for c in DATA["categories"])
-    body = f'''
+    body = '''
 <header class="page-head">
   <div class="wrap">
     <p class="eyebrow">TOOL \u2014 GENERATOR</p>
@@ -805,7 +804,7 @@ def build_generator_page():
   <div class="wrap">
     <div class="tool-panel" data-generator>
       <label for="gen-category">Filed under</label>
-      <select id="gen-category"><option value="all">All categories</option>{cat_options}</select>
+      <select id="gen-category"><option value="all">All categories</option></select>
       <div style="margin-top:20px;"><button class="btn btn-stamp" data-generate-btn>Generate a card</button></div>
 
       <div class="result-card" style="display:none;">
