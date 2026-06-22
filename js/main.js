@@ -231,14 +231,15 @@
 
   /* ---------- journal: write your own -------------------------------------------- */
   function initJournal() {
-    var form = document.querySelector("[data-journal-form]");
-    if (!form) return;
     var listEl = document.querySelector("[data-journal-list]");
+    var form = document.querySelector("[data-journal-form]");
+    if (!listEl && !form) return;
 
     function render() {
+      if (!listEl) return;
       var entries = getJournal();
       if (!entries.length) {
-        listEl.innerHTML = "<p class=\"lede\">Your written cards will be filed here \u2014 stored only in this browser.</p>";
+        listEl.innerHTML = "<p class=\"lede\">Your written cards will be filed here \u2014 stored only in this browser. <a href=\"/tools/journal.html\">Write your first one \u2192</a></p>";
         return;
       }
       listEl.innerHTML = "<div class=\"fan-grid\">" + entries.map(function (e) {
@@ -260,23 +261,25 @@
       });
     }
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var situation = form.querySelector("#j-situation").value.trim();
-      var strength = form.querySelector("#j-strength").value.trim();
-      var statement = form.querySelector("#j-statement").value.trim();
-      if (!statement) { showToast("Write your affirmation first"); return; }
-      saveJournalEntry({
-        id: Date.now(),
-        date: new Date().toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }),
-        situation: situation,
-        strength: strength,
-        text: statement
+    if (form) {
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var situation = form.querySelector("#j-situation").value.trim();
+        var strength = form.querySelector("#j-strength").value.trim();
+        var statement = form.querySelector("#j-statement").value.trim();
+        if (!statement) { showToast("Write your affirmation first"); return; }
+        saveJournalEntry({
+          id: Date.now(),
+          date: new Date().toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }),
+          situation: situation,
+          strength: strength,
+          text: statement
+        });
+        form.reset();
+        showToast("Filed");
+        render();
       });
-      form.reset();
-      showToast("Filed");
-      render();
-    });
+    }
 
     render();
   }

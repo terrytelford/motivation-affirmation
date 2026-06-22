@@ -280,9 +280,9 @@ def build_home():
   <div class="wrap">
     <div class="subscribe-card">
       <div>
-        <p class="eyebrow">WEEKLY DISPATCH</p>
-        <h2>One card, picked for you, every Sunday.</h2>
-        <p style="color:var(--ink-faint);margin-top:10px;">No fluff, no daily spam \u2014 just a short email with one affirmation per category and whatever we\u2019re filing on the blog that week.</p>
+        <p class="eyebrow">DAILY DISPATCH</p>
+        <h2>One card, picked for you, every morning.</h2>
+        <p style="color:var(--ink-faint);margin-top:10px;">Free, always. One affirmation delivered to your inbox each day \u2014 specific to a category you can actually use that morning.</p>
       </div>
       <div>
         <form class="subscribe-form" data-newsletter-form>
@@ -305,10 +305,18 @@ def build_categories_index():
   <div class="card-body">
     <h3 style="font-family:var(--font-display);font-style:italic;">{c['label']}</h3>
     <p style="color:var(--ink-faint);font-size:0.92rem;margin:8px 0 14px;">{c['dek']}</p>
-    <a class="icon-btn" href="{c['slug']}.html">Open drawer \u2192</a>
+    <a class="icon-btn" href="/categories/{c['slug']}.html">Open drawer \u2192</a>
   </div>
 </div>''' for c in DATA["categories"]
     )
+    personal_card = '''<div class="card" style="min-height:170px;">
+  <div class="card-meta"><span>DRAWER</span><span>YOURS</span></div>
+  <div class="card-body">
+    <h3 style="font-family:var(--font-display);font-style:italic;">My Personal Affirmations</h3>
+    <p style="color:var(--ink-faint);font-size:0.92rem;margin:8px 0 14px;">Affirmations you wrote yourself, filed here in your browser. Private, always.</p>
+    <a class="icon-btn" href="/categories/personal.html">Open drawer \u2192</a>
+  </div>
+</div>'''
     body = f'''
 <header class="page-head">
   <div class="wrap">
@@ -319,7 +327,7 @@ def build_categories_index():
 </header>
 <section>
   <div class="wrap">
-    <div class="fan-grid">{cards}</div>
+    <div class="fan-grid">{cards}{personal_card}</div>
   </div>
 </section>
 '''
@@ -702,11 +710,22 @@ BLOG_POSTS = [
 
 
 def build_blog():
-    rows = "".join(
-        f'''<a class="post-row" href="{p['slug']}.html">
-  <span class="post-date">{p['date']}</span>
-  <div><h3>{p['title']}</h3><p>{p['excerpt']}</p></div>
-</a>''' for p in BLOG_POSTS
+    cards = "".join(
+        f'''<div class="card" style="min-height:auto;padding:0;overflow:hidden;">
+  <a href="/blog/{p['slug']}.html" style="display:block;text-decoration:none;color:inherit;">
+    <div style="aspect-ratio:16/9;overflow:hidden;background:var(--canvas-alt);">
+      <img src="/images/blog/{p['slug']}.jpg" alt="{p['title']}" loading="lazy"
+           style="width:100%;height:100%;object-fit:cover;"
+           onerror="this.parentElement.style.background=\'var(--canvas-alt)\'">
+    </div>
+    <div class="card-body" style="padding:18px 20px 20px;">
+      <p class="eyebrow" style="margin-bottom:6px;">{p['date']}</p>
+      <h3 style="font-family:var(--font-display);font-style:italic;font-size:1.1rem;margin-bottom:8px;">{p['title']}</h3>
+      <p style="color:var(--ink-faint);font-size:0.9rem;line-height:1.5;">{p['excerpt']}</p>
+      <div class="card-actions" style="margin-top:14px;"><span class="icon-btn">Read →</span></div>
+    </div>
+  </a>
+</div>''' for p in BLOG_POSTS
     )
     body = f'''
 <header class="page-head">
@@ -718,7 +737,7 @@ def build_blog():
 </header>
 <section>
   <div class="wrap">
-    <div class="post-list">{rows}</div>
+    <div class="fan-grid">{cards}</div>
   </div>
 </section>
 '''
@@ -757,13 +776,13 @@ def build_tools_index():
         <p class="eyebrow">GENERATOR</p>
         <h3>Pull a card from any drawer</h3>
         <p>Filter by category, generate a card, save your favorites for later.</p>
-        <a href="generator.html" class="btn btn-stamp">Open the generator</a>
+        <a href="/tools/generator.html" class="btn btn-stamp">Open the generator</a>
       </div>
       <div class="tool-card">
         <p class="eyebrow moss">JOURNAL</p>
         <h3>Write the one that\u2019s actually true</h3>
         <p>A simple situation &rarr; strength &rarr; statement framework for writing affirmations that hold up.</p>
-        <a href="journal.html" class="btn btn-outline">Start writing</a>
+        <a href="/tools/journal.html" class="btn btn-outline">Start writing</a>
       </div>
     </div>
   </div>
@@ -841,6 +860,27 @@ def build_journal_page():
 </section>
 '''
     write("tools/journal.html", page("Write Your Own Affirmations", "A simple situation, strength, statement framework for writing affirmations that actually hold up \u2014 saved privately in your browser.", "/", "tools", body))
+
+
+def build_personal_page():
+    body = '''
+<header class="page-head">
+  <div class="wrap">
+    <p class="eyebrow moss">DRAWER \u2014 YOURS</p>
+    <h1>My Personal Affirmations</h1>
+    <p class="lede">Affirmations you wrote yourself, filed here. Stored only in this browser \u2014 nothing leaves your device. <a href="/tools/journal.html">Write a new one \u2192</a></p>
+  </div>
+</header>
+<section>
+  <div class="wrap">
+    <div data-journal-list></div>
+    <p style="margin-top:32px;color:var(--ink-faint);font-size:0.92rem;">
+      Want to write your own? Use the <a href="/tools/journal.html">Journal tool</a> \u2014 it walks you through a simple situation \u2192 strength \u2192 statement framework.
+    </p>
+  </div>
+</section>
+'''
+    write("categories/personal.html", page("My Personal Affirmations", "Your self-written affirmation cards, stored privately in your browser.", "/", "categories", body))
 
 
 def build_shop():
@@ -1041,6 +1081,7 @@ if __name__ == "__main__":
     build_home()
     build_categories_index()
     build_category_pages()
+    build_personal_page()
     build_blog()
     build_tools_index()
     build_generator_page()

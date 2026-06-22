@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tools — Motivation Affirmation</title>
-<meta name="description" content="Free affirmation generator and self-write journal tool. No account needed.">
+<title>My Personal Affirmations — Motivation Affirmation</title>
+<meta name="description" content="Your self-written affirmation cards, stored privately in your browser.">
 <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
-<meta property="og:title" content="Tools — Motivation Affirmation">
-<meta property="og:description" content="Free affirmation generator and self-write journal tool. No account needed.">
+<meta property="og:title" content="My Personal Affirmations — Motivation Affirmation">
+<meta property="og:description" content="Your self-written affirmation cards, stored privately in your browser.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Poppins:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css">
@@ -17,33 +17,23 @@
   <div class="wrap">
     <a href="/index.html" class="logo"><img src="/images/logo.png" alt="Motivation Affirmation" class="logo-img"></a>
     <button class="nav-toggle" aria-label="Toggle navigation">MENU</button>
-    <div class="nav-links"><a href="/index.html">Today’s Card</a><a href="/categories/index.html">Categories</a><a href="/tools/index.html" class="current">Tools</a><a href="/blog/index.html">Blog</a><a href="/shop.html">Shop</a><a href="/about.html">About</a></div>
+    <div class="nav-links"><a href="/index.html">Today’s Card</a><a href="/categories/index.html" class="current">Categories</a><a href="/tools/index.html">Tools</a><a href="/blog/index.html">Blog</a><a href="/shop.html">Shop</a><a href="/about.html">About</a></div>
   </div>
 </nav>
 
 <header class="page-head">
   <div class="wrap">
-    <p class="eyebrow">TOOLS</p>
-    <h1>Two ways to use Motivation Affirmation</h1>
-    <p class="lede">Both run entirely in your browser — no account, no data leaving your device. Pull a card when you need one, or write the affirmation that’s actually true for your life right now.</p>
+    <p class="eyebrow moss">DRAWER — YOURS</p>
+    <h1>My Personal Affirmations</h1>
+    <p class="lede">Affirmations you wrote yourself, filed here. Stored only in this browser — nothing leaves your device. <a href="/tools/journal.html">Write a new one →</a></p>
   </div>
 </header>
 <section>
   <div class="wrap">
-    <div class="tool-grid">
-      <div class="tool-card">
-        <p class="eyebrow">GENERATOR</p>
-        <h3>Pull a card from any drawer</h3>
-        <p>Filter by category, generate a card, save your favorites for later.</p>
-        <a href="/tools/generator.html" class="btn btn-stamp">Open the generator</a>
-      </div>
-      <div class="tool-card">
-        <p class="eyebrow moss">JOURNAL</p>
-        <h3>Write the one that’s actually true</h3>
-        <p>A simple situation &rarr; strength &rarr; statement framework for writing affirmations that hold up.</p>
-        <a href="/tools/journal.html" class="btn btn-outline">Start writing</a>
-      </div>
-    </div>
+    <div data-journal-list></div>
+    <p style="margin-top:32px;color:var(--ink-faint);font-size:0.92rem;">
+      Want to write your own? Use the <a href="/tools/journal.html">Journal tool</a> — it walks you through a simple situation → strength → statement framework.
+    </p>
   </div>
 </section>
 <footer>
